@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">VocolRecorder</string>
+
+    <string name="tab_title_record">Record</string>
+    <string name="tab_title_saved_recordings">Saved Recordings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="bar_menu_stetting">setting</string>
+
+    <!--preference-->
+    <string name="pref_vocal_key">pref_vocal</string>
+    <string name="pref_vocal_title">vocal setting</string>
+    <string name="pref_vocal_summary">vocal</string>
+</resources>
