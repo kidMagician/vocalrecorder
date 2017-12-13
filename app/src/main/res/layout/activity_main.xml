@@ -11,18 +11,38 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar"
         />
-
-    <com.astuetz.PagerSlidingTabStrip
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:id="@+id/tabs"/>
-
-    <android.support.v4.view.ViewPager
-        android:layout_width="match_parent"
-        android:layout_height="0px"
+        android:layout_height="match_parent"
         android:layout_weight="1"
-        android:id="@+id/pager"
-        />
+        android:id="@+id/container"
+        >
+
+    </FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.AppCompatImageButton
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/if_home_126572"
+            android:id="@+id/btn_home"
+            />
+        <android.support.v7.widget.AppCompatImageButton
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/if_add_126583"
+            android:id="@+id/btn_record"
+            />
+        <android.support.v7.widget.AppCompatImageButton
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/if_alarm_126584"
+            android:id="@+id/btn_alert"/>
+    </LinearLayout>
 
 
 </LinearLayout>

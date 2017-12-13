@@ -1,6 +1,9 @@
 package com.example.nss.vocolrecorder.util.HtttpManagement.HConnecter;
 
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.example.nss.vocolrecorder.util.HtttpManagement.Auth.Authentication;
@@ -24,54 +27,22 @@ import org.json.simple.parser.ParseException;
  * Created by NSS on 8/30/2017.
  */
 
-public class HLoginConnecter implements HttpConnecter {
+public class HLoginConnecter extends AbstarctHttpConnecter implements HttpConnecter {
 
     private HttpURLConnection httpURLConnection;
 
     private Authentication token;
+    private Context context;
 
-    public HLoginConnecter(Authentication token){
+    public HLoginConnecter(Context context,Authentication token){
 
         this.token = token;
+        this.context =context;
     }
 
 
-    public Boolean RequestPost(String urlStr, ContentValues params){
+    public Boolean Request(String urlStr, ContentValues params){
 
-        StringBuffer sbParams = new StringBuffer();
-
-        if(params ==null){
-
-            sbParams.append("");
-
-        }else{
-
-            boolean isAnd = false;
-
-            String key;
-            String value;
-
-            for(Map.Entry<String,Object> parameter: params.valueSet()){
-
-                key = parameter.getKey();
-                value= parameter.getValue().toString();
-
-                if(isAnd){
-                    sbParams.append("&");
-                }
-
-                sbParams.append(key).append("=").append(value);
-
-                if(!isAnd){
-                    if(params.size()>=2){
-
-                        isAnd=true;
-                    }
-
-                }
-            }
-
-        }
 
         try{
 
@@ -83,7 +54,7 @@ public class HLoginConnecter implements HttpConnecter {
             //httpURLConnection.setRequestProperty("Authentication","token "+token);
 //            httpURLConnection.setRequestProperty("","");
 
-            String strParams = sbParams.toString();
+            String strParams = ConvertToString(params);
 
 
             OutputStream os = httpURLConnection.getOutputStream();
@@ -104,14 +75,22 @@ public class HLoginConnecter implements HttpConnecter {
                 }
 
                 if(jsonToken !=""){
+
                     try{
+
                         JSONParser jsonParser =new JSONParser();
 
                         JSONObject tokenObject = (JSONObject) jsonParser.parse(jsonToken);
 
                         String strToken = (String)tokenObject.get("token");
 
+
                         token.SetValue(strToken);
+
+                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("pref_token",token.toString());
+                        editor.commit();
 
 
                     }catch (ParseException e){
@@ -130,7 +109,6 @@ public class HLoginConnecter implements HttpConnecter {
 
                 return false;
             }
-
 
         }catch(ProtocolException e){
 

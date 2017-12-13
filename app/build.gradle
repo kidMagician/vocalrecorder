@@ -12,7 +12,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         buildConfigField "String", "YOUTUBE_API_KEY", "\"AIzaSyBdoLmW4y_XFpknag3u2FLM0sxazi3OrQo\""
-        buildConfigField "String", "SERVER_URL","\"http://192.168.137.1:8000\""
+        buildConfigField "String", "SERVER_URL", "\"http://192.168.137.1:8000\""
     }
     buildTypes {
         release {
@@ -40,6 +40,8 @@ dependencies {
     compile 'com.google.api-client:google-api-client:1.23.0'
     compile 'com.google.apis:google-api-services-youtube:v3-rev187-1.23.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile files('libs/YouTubeAndroidPlayerApi.jar')
+
 
     testCompile 'junit:junit:4.12'
 }

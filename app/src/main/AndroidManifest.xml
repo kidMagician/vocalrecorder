@@ -17,14 +17,28 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Activity.LoginActivity">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+        <activity android:name=".Activity.JoinActivity" />
+        <activity android:name=".Activity.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.JoinActivity" />
-        <activity android:name=".Activity.MainActivity" />
+
+        <activity-alias
+            android:name=".AliasActivity"
+            android:enabled="false"
+            android:targetActivity=".Activity.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity-alias>
 
         <service
             android:name=".Listener.RecordService"
@@ -32,8 +46,11 @@
             android:exported="true" />
 
         <activity android:name=".Activity.SettingActivity" />
-        <activity android:name=".Activity.FindAccount" />
-        <activity android:name=".Activity.VocalSettingActivity"></activity>
+        <activity android:name=".Activity.FindAccountActivity" />
+        <activity android:name=".Activity.VocalSellectActivity" />
+        <activity android:name=".Activity.YoutubePlayActivity" />
+        <activity android:name=".Activity.RecorderActivity" />
+        <activity android:name=".Activity.TeacherSellectActivity"></activity>
     </application>
 
 </manifest>

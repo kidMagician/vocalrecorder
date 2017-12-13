@@ -9,6 +9,7 @@ import android.os.Environment;
 import android.os.IBinder;
 import android.widget.Toast;
 
+import com.example.nss.vocolrecorder.BuildConfig;
 import com.example.nss.vocolrecorder.util.HtttpManagement.HConnecter.HVoiceUploadConnecter;
 import com.example.nss.vocolrecorder.util.HtttpManagement.HConnecter.HttpConnecter;
 import com.example.nss.vocolrecorder.util.HtttpManagement.HttpConnecterManager;
@@ -95,7 +96,6 @@ public class RecordService extends Service {
 
     private void StopRecord(){
 
-
         mediaRecorder.stop();
 
         endTimeMile =System.currentTimeMillis();
@@ -113,13 +113,17 @@ public class RecordService extends Service {
 
             ContentValues values = new ContentValues();
 
+            values.put("paramName","voiceFile");
             values.put("filePath",filePath+fileName);
             values.put("fileName",fileName);
             values.put("length",endTimeMile-startTimeMile);
-            values.put("mTime",mTIme);
+            values.put("savedDate",mTIme);
+            values.put("youtube_id",MySharedPreference.getPrefVocalUrl(getApplicationContext()));
+            values.put("teacher_nick",MySharedPreference.getPrefTeacherNick(getApplicationContext()));
+            values.put("student_nick",MySharedPreference.getPrefMyNick(getApplicationContext()));
 
             httpHandler = new HttpHandler();
-            httpHandler.execute("http://192.168.10.164:8000/voiceTraining/voiceUpload",values);
+            httpHandler.execute(BuildConfig.SERVER_URL+"/voiceTraining/voiceUpload",values);
 
         }else{
 
@@ -163,11 +167,11 @@ public class RecordService extends Service {
         @Override
         protected String doInBackground(Object... params) {
 
-            HttpConnecterManager httpConnecterManager = (HttpConnecterManager)getApplicationContext().getApplicationContext(); //new HttpConnecterManager();
+            HttpConnecterManager httpConnecterManager = (HttpConnecterManager)getApplicationContext().getApplicationContext();
 
             HttpConnecter httpConnecter = (HVoiceUploadConnecter) httpConnecterManager.GetHttpConnecter(HttpConnecterManager.VOICEUPLOAD);
 
-            httpConnecter.RequestPost(params[0].toString(), (ContentValues) params[1]);
+            httpConnecter.Request(params[0].toString(), (ContentValues) params[1]);
 
 
             return null;

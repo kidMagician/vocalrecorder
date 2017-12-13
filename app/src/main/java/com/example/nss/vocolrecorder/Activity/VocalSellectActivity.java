@@ -9,7 +9,7 @@ import com.example.nss.vocolrecorder.R;
 import java.util.HashSet;
 import java.util.Set;
 
-public class VocalSettingActivity extends AppCompatActivity {
+public class VocalSellectActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

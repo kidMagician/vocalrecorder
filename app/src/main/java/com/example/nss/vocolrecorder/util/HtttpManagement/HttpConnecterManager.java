@@ -4,9 +4,9 @@ import android.app.Application;
 
 import com.example.nss.vocolrecorder.util.HtttpManagement.Auth.Authentication;
 import com.example.nss.vocolrecorder.util.HtttpManagement.Auth.Token;
-import com.example.nss.vocolrecorder.util.HtttpManagement.HConnecter.HFindAcounterConnecter;
+import com.example.nss.vocolrecorder.util.HtttpManagement.HConnecter.HJsonConnecter;
 import com.example.nss.vocolrecorder.util.HtttpManagement.HConnecter.HLoginConnecter;
-import com.example.nss.vocolrecorder.util.HtttpManagement.HConnecter.HRegisterConnecter;
+import com.example.nss.vocolrecorder.util.HtttpManagement.HConnecter.HPostConnecter;
 import com.example.nss.vocolrecorder.util.HtttpManagement.HConnecter.HVoiceUploadConnecter;
 import com.example.nss.vocolrecorder.util.HtttpManagement.HConnecter.HttpConnecter;
 
@@ -14,18 +14,19 @@ import com.example.nss.vocolrecorder.util.HtttpManagement.HConnecter.HttpConnect
  * Created by NSS on 8/30/2017.
  */
 
+
 public class HttpConnecterManager extends Application {
 
     private Authentication token;
 
     public static final int LOGIN=1;
-    public static final int REGISTER=2;
-    public static final int FINDPASS=3;
-    public static final int VOICEUPLOAD=4;
+    public static final int VOICEUPLOAD=2;
+    public static final int JSON=3;
+    public static final int POST=4;
 
     public HttpConnecterManager(){
 
-        token =new Token();
+        token =new Token("");
     }
 
     public HttpConnecter GetHttpConnecter(int type){
@@ -34,24 +35,29 @@ public class HttpConnecterManager extends Application {
 
             case LOGIN:
 
-                return new HLoginConnecter(token);
+                return new HLoginConnecter(getApplicationContext() , token);
 
-            case REGISTER:
-
-                return new HRegisterConnecter();
-
-            case FINDPASS:
-
-                return new HFindAcounterConnecter();
             case VOICEUPLOAD:
 
                 return new HVoiceUploadConnecter(token);
 
+            case JSON:
+                return new HJsonConnecter(token);
+
+            case POST:
+                return new HPostConnecter(token);
         }
 
         return null;
 
     }
+
+    public void setAuth(Authentication auth){
+
+        this.token =auth;
+
+    }
+
 
     public void DestroySession(){
 

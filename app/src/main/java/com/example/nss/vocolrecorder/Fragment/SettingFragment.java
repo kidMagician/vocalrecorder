@@ -1,25 +1,17 @@
 package com.example.nss.vocolrecorder.Fragment;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
-import com.example.nss.vocolrecorder.Activity.SettingActivity;
-import com.example.nss.vocolrecorder.Activity.VocalSettingActivity;
+import com.example.nss.vocolrecorder.Activity.TeacherSellectActivity;
+import com.example.nss.vocolrecorder.Activity.VocalSellectActivity;
 import com.example.nss.vocolrecorder.Listener.MySharedPreference;
 import com.example.nss.vocolrecorder.R;
 
 
 public class SettingFragment extends PreferenceFragment {
-
-
 
     public SettingFragment() {
         // Required empty public constructor
@@ -37,7 +29,7 @@ public class SettingFragment extends PreferenceFragment {
             @Override
             public boolean onPreferenceClick(Preference preference) {
 
-                Intent intent = new Intent(getActivity(),VocalSettingActivity.class);
+                Intent intent = new Intent(getActivity(),VocalSellectActivity.class);
 
                 startActivity(intent);
 
@@ -45,7 +37,21 @@ public class SettingFragment extends PreferenceFragment {
             }
         });
 
+        Preference pref_teacher = findPreference(getString(R.string.pref_teacher_key));
 
+        pref_teacher.setSummary(MySharedPreference.getPrefTeacherNick(getActivity()));
+
+        pref_teacher.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+
+                Intent intent = new Intent(getActivity(),TeacherSellectActivity.class);
+
+                startActivity(intent);
+
+                return true;
+            }
+        });
 
     }
 

@@ -8,5 +8,5 @@ import android.content.ContentValues;
 
 public interface HttpConnecter {
 
-    Object RequestPost(String urlStr, ContentValues params);
+    Object Request(String urlStr, ContentValues  params);
 }

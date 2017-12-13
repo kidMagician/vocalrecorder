@@ -8,6 +8,13 @@ public class Token implements Authentication {
 
     private String  token;
 
+    public Token(String token){
+
+        this.token =token;
+
+    }
+
+
     @Override
     public void SetValue(Object value) {
 

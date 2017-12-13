@@ -1,8 +1,6 @@
 package com.example.nss.vocolrecorder.Adapter;
 
 import android.content.Context;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,15 +9,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.nss.vocolrecorder.BuildConfig;
-import com.example.nss.vocolrecorder.Fragment.YoutubePlayFragment;
 import com.example.nss.vocolrecorder.Listener.MySharedPreference;
 import com.example.nss.vocolrecorder.R;
 import com.google.api.services.youtube.model.SearchResult;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
-import java.util.zip.Inflater;
 
 /**
  * Created by NSS on 2017-11-15.
@@ -33,21 +28,30 @@ public class VocalSelectAdapter extends RecyclerView.Adapter<VocalSelectAdapter.
 
     SearchResult item;
 
+    onVocalItemClickLisener vocalItemClickLisener;
+
     public VocalSelectAdapter(Context context){
 
         this.context = context;
 
     }
+
+    public void setOnclickLisener(onVocalItemClickLisener vocalItemClickLisener){
+
+        this.vocalItemClickLisener=vocalItemClickLisener;
+    }
+
     public void setYoutubeList(List<SearchResult> searchResultList){
 
         this.searchResultList =searchResultList;
 
-        notifyItemInserted(getItemCount()-1);
+        notifyItemChanged(getItemCount()-1);
+        notifyDataSetChanged();
 
     }
 
     @Override
-    public void onBindViewHolder(VocalVIewHolder holder, int position) {
+    public void onBindViewHolder(final VocalVIewHolder holder, int position) {
 
         item= searchResultList.get(position);
 
@@ -58,14 +62,17 @@ public class VocalSelectAdapter extends RecyclerView.Adapter<VocalSelectAdapter.
         holder.btn_select_vocal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MySharedPreference.setPrefVocalUrl(context,item.getId().getVideoId());
-                MySharedPreference.setPrefVocalName(context,item.getSnippet().getTitle());
+                MySharedPreference.setPrefVocalUrl(context,searchResultList.get(holder.getPosition()).getId().getVideoId());
+                MySharedPreference.setPrefVocalName(context,searchResultList.get(holder.getPosition()).getSnippet().getTitle());
             }
         });
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                vocalItemClickLisener.OnClickVideo(holder.getPosition());
+
 //                YoutubePlayFragment youtubeFragment=(YoutubePlayFragment)((FragmentActivity)context).getSupportFragmentManager().findFragmentById(R.id.youtubeFragment);
 //                youtubeFragment.initialize(BuildConfig.YOUTUBE_API_KEY,
 //                        new YoutubePlayer.OnInitializedListener() {
@@ -123,6 +130,10 @@ public class VocalSelectAdapter extends RecyclerView.Adapter<VocalSelectAdapter.
         }
 
         return 0;
+    }
 
+    public interface onVocalItemClickLisener{
+
+        void OnClickVideo(int position);
     }
 }

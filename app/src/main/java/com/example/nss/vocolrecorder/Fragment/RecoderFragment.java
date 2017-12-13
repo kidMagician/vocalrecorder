@@ -9,13 +9,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.example.nss.vocolrecorder.Activity.RecorderActivity;
+import com.example.nss.vocolrecorder.BuildConfig;
 import com.example.nss.vocolrecorder.Listener.RecordService;
 import com.example.nss.vocolrecorder.R;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerFragment;
+import com.google.android.youtube.player.YouTubePlayerSupportFragment;
+import com.google.android.youtube.player.YouTubePlayerView;
+import com.google.api.services.youtube.YouTube;
 import com.melnykov.fab.FloatingActionButton;
 
 import java.io.File;
@@ -27,7 +36,7 @@ import java.io.File;
  * Use the {@link RecoderFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RecoderFragment extends Fragment {
+public class RecoderFragment extends Fragment{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_POSITION = "position";
@@ -38,6 +47,8 @@ public class RecoderFragment extends Fragment {
     private FloatingActionButton btn_play;
     private TextView txt_play;
     private VideoView video_vocal;
+
+    private Button btn_test;
 
     private String tag = "in RecoderFragment";
 
@@ -71,6 +82,8 @@ public class RecoderFragment extends Fragment {
         position = getArguments().getInt(ARG_POSITION);
 
         isPlay = false;
+
+
     }
 
     @Override
@@ -82,13 +95,23 @@ public class RecoderFragment extends Fragment {
         btn_play = (FloatingActionButton) view.findViewById(R.id.btn_play);
         txt_play = (TextView) view.findViewById(R.id.txt_play);
         video_vocal = (VideoView) view.findViewById(R.id.video_vocal);
+        btn_test = (Button)view.findViewById(R.id.btn_testRecord);
 
-        Uri videoUri = Uri.parse("rtsp://v5.cache1.c.youtube.com/CjYLENy73wIaLQnhycnrJQ8qmRMYESARFEIJbXYtZ29vZ2xlSARSBXdhdGNoYPj_hYjnq6uUTQw=/0/0/0/video.3gp");
+        btn_test.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i = new Intent(getActivity(), RecorderActivity.class);
+
+                startActivity(i);
+            }
+        });
+
+        Uri videoUri = Uri.parse("http://www.youtube.com/embed/srMFb6zpx2Y");
 
         video_vocal.setVideoURI(videoUri);
 
-        final MediaController mediaController =
-                new MediaController(getContext());
+        final MediaController mediaController = new MediaController(getContext());
         video_vocal.setMediaController(mediaController);
         video_vocal.start();
 
@@ -98,7 +121,7 @@ public class RecoderFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Play();
+//                Play();
             }
         });
 

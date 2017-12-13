@@ -11,13 +11,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.nss.vocolrecorder.BuildConfig;
-import com.example.nss.vocolrecorder.util.HtttpManagement.HConnecter.HFindAcounterConnecter;
 import com.example.nss.vocolrecorder.util.HtttpManagement.HConnecter.HttpConnecter;
 import com.example.nss.vocolrecorder.util.HtttpManagement.HttpConnecterManager;
 import com.example.nss.vocolrecorder.R;
 import com.example.nss.vocolrecorder.etc.NetworkChecker;
 
-public class FindAccount extends AppCompatActivity {
+public class FindAccountActivity extends AppCompatActivity {
 
     private Button btn_ok;
     private Button btn_cancel;
@@ -49,12 +48,12 @@ public class FindAccount extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                FindAccount.this.finish();
+                FindAccountActivity.this.finish();
 
             }
         });
 
-        networkChecker = new NetworkChecker(FindAccount.this);
+        networkChecker = new NetworkChecker(FindAccountActivity.this);
 
     }
 
@@ -70,7 +69,7 @@ public class FindAccount extends AppCompatActivity {
                 httpAsynk.execute(BuildConfig.SERVER_URL+"auth/findPass", values);
 
             } else {
-                Toast.makeText(FindAccount.this,"Network not connected",Toast.LENGTH_LONG).show();
+                Toast.makeText(FindAccountActivity.this,"Network not connected",Toast.LENGTH_LONG).show();
 
             }
 
@@ -127,9 +126,9 @@ public class FindAccount extends AppCompatActivity {
 
             httpConnecterManager = new HttpConnecterManager();
 
-            HttpConnecter httpConnecter = (HFindAcounterConnecter)httpConnecterManager.GetHttpConnecter(HttpConnecterManager.FINDPASS);
+            HttpConnecter httpConnecter = httpConnecterManager.GetHttpConnecter(HttpConnecterManager.POST);
 
-            is_suc = (boolean)httpConnecter.RequestPost((String)params[0],(ContentValues) params[1]);
+            is_suc = (boolean)httpConnecter.Request((String)params[0],(ContentValues) params[1]);
 
 
             return null;
@@ -141,10 +140,10 @@ public class FindAccount extends AppCompatActivity {
 
             if(is_suc){
 
-                FindAccount.this.finish();
+                FindAccountActivity.this.finish();
 
             }else{
-                Toast.makeText(FindAccount.this,"failed",Toast.LENGTH_LONG).show();
+                Toast.makeText(FindAccountActivity.this,"failed",Toast.LENGTH_LONG).show();
             }
         }
     }

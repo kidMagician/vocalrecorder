@@ -13,4 +13,9 @@
     <string name="pref_vocal_key">pref_vocal</string>
     <string name="pref_vocal_title">vocal setting</string>
     <string name="pref_vocal_summary">vocal</string>
+    <string name="pref_teacher_key">pref_teacher</string>
+    <string name="pref_teacher_title">teacher setting</string>
+    <string name="pref_teacher_summary">teacher</string>
+
+
 </resources>

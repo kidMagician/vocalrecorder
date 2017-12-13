@@ -1,10 +1,12 @@
 package com.example.nss.vocolrecorder.util.HtttpManagement.HConnecter;
 
 import android.content.ContentValues;
+import android.os.Environment;
 import android.util.Log;
 
 import com.example.nss.vocolrecorder.util.HtttpManagement.Auth.Authentication;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.FileInputStream;
@@ -13,6 +15,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Created by NSS on 9/11/2017.
@@ -31,14 +35,15 @@ public class HVoiceUploadConnecter implements HttpConnecter {
     }
 
     @Override
-    public Object RequestPost(String urlStr, ContentValues params) {
+    public Object Request(String urlStr, ContentValues  params) {
 
         String crlf = "\r\n";
         String twoHyphens = "--";
         String boundary =  "*****";
+
+        String parmName = (String)params.get("paramName");
         String filePath = (String)params.get("filePath");
         String fileName = (String)params.get("fileName");
-        //String attachmentName ="voice";
         try {
 
             FileInputStream fileInputStream =new FileInputStream(filePath);
@@ -56,13 +61,13 @@ public class HVoiceUploadConnecter implements HttpConnecter {
             conn.setRequestProperty("User-Agent", "Android Multipart HTTP Client 1.0");
             conn.setRequestProperty(
                     "Content-Type", "multipart/form-data;boundary=" + boundary);
-//            conn.setRequestProperty("Authentication","token "+token);
+            conn.setRequestProperty("Authentication","token "+token);
 
             DataOutputStream dataOutputStream = new DataOutputStream( conn.getOutputStream());
 
             dataOutputStream.writeBytes(twoHyphens + boundary + crlf);
             dataOutputStream.writeBytes("Content-Disposition: form-data; name=\"" +
-                    "voice" + "\"; filename=\"" +
+                    parmName + "\"; filename=\"" +
                     fileName + "\"" + crlf);
             dataOutputStream.writeBytes(crlf);
 
@@ -96,14 +101,24 @@ public class HVoiceUploadConnecter implements HttpConnecter {
 
             dataOutputStream.writeBytes(crlf);
 
-            dataOutputStream.writeBytes(twoHyphens + boundary + crlf);
-            dataOutputStream.writeBytes("Content-Disposition: form-data; name=\"" +
-                    "savedDate" + "\"" +crlf);
-            dataOutputStream.writeBytes("Content-Type: text/plain" + crlf);
-            dataOutputStream.writeBytes(crlf);
-            dataOutputStream.writeBytes("2017-01-01");
+            for(Map.Entry<String,Object> parameter: params.valueSet()) {
 
-            dataOutputStream.writeBytes(crlf);
+                if(parameter.getKey() !="paramName" &&parameter.getKey() !="filePath"&&parameter.getKey() !="fileName"){
+
+                    dataOutputStream.writeBytes(twoHyphens + boundary + crlf);
+                    dataOutputStream.writeBytes("Content-Disposition: form-data; name=\"" +
+                            parameter.getKey() + "\"" + crlf);
+                    dataOutputStream.writeBytes("Content-Type: text/plain" + crlf);
+                    dataOutputStream.writeBytes(crlf);
+                    dataOutputStream.writeBytes(parameter.getValue().toString());
+
+                    dataOutputStream.writeBytes(crlf);
+
+                }
+
+
+            }
+
             dataOutputStream.writeBytes(twoHyphens + boundary +
                     twoHyphens + crlf);
 
@@ -137,4 +152,5 @@ public class HVoiceUploadConnecter implements HttpConnecter {
 
         return null;
     }
+
 }

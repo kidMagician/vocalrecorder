@@ -1,18 +1,26 @@
 package com.example.nss.vocolrecorder.Fragment;
 
-import android.app.DownloadManager;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.example.nss.vocolrecorder.Activity.LoginActivity;
+import com.example.nss.vocolrecorder.Activity.YoutubePlayActivity;
 import com.example.nss.vocolrecorder.Adapter.VocalSelectAdapter;
 import com.example.nss.vocolrecorder.BuildConfig;
 import com.example.nss.vocolrecorder.Listener.MySharedPreference;
@@ -34,15 +42,19 @@ import com.google.api.services.youtube.model.Thumbnail;
 
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 
-public class VocalSellectFragment extends Fragment {
+public class VocalSellectFragment extends Fragment implements VocalSelectAdapter.onVocalItemClickLisener {
 
     private SearchView search_vocal;
     private RecyclerView rv_vocalList;
-
-    private Button btn_test;
+    private ProgressBar progress_youtube;
+    private ImageView img_main;
 
     private SearchyoutubeThread searchyoutubeThread;
     private NetworkChecker networkChecker;
@@ -73,9 +85,11 @@ public class VocalSellectFragment extends Fragment {
         View v=inflater.inflate(R.layout.fragment_vocal_sellect, container, false);
 
         search_vocal =(SearchView) v.findViewById(R.id.search_vocal);
-        btn_test=(Button)v.findViewById(R.id.btn_test);
         rv_vocalList=(RecyclerView)v.findViewById(R.id.rv_vocalList);
+        progress_youtube=(ProgressBar) v.findViewById(R.id.progress_youtube);
+        img_main=(ImageView)v.findViewById(R.id.img_main);
 
+        setFrame();
         setRecycleView();
 
         search_vocal.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -85,9 +99,15 @@ public class VocalSellectFragment extends Fragment {
 
                 if(validateSearch()&&networkChecker.CheckConnected()){
 
-                    searchyoutubeThread.execute();
+                    searchyoutubeThread = new SearchyoutubeThread();
+
+                    startProgressBar();
+
+                    searchyoutubeThread.execute(search_vocal.getQuery().toString());
 
                 }
+
+
                 return true;
             }
 
@@ -99,23 +119,34 @@ public class VocalSellectFragment extends Fragment {
         });
 
 
-        btn_test.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-
-                setVocal("urltest","testName2");
-            }
-        });
-
         networkChecker =new NetworkChecker(getContext());
 
-        searchyoutubeThread = new SearchyoutubeThread();
-
-        ;
 
         return v;
     }
+
+    private void setFrame(){
+
+        progress_youtube.setVisibility(View.GONE);
+        rv_vocalList.setVisibility(View.GONE);
+    }
+
+
+    private void startProgressBar(){
+
+        rv_vocalList.setVisibility(View.GONE);
+        progress_youtube.setVisibility(View.VISIBLE);
+        img_main.setVisibility(View.GONE);
+
+    }
+
+    private void endProgressBar(){
+
+        rv_vocalList.setVisibility(View.VISIBLE);
+        progress_youtube.setVisibility(View.GONE);
+
+    }
+
 
     private void setRecycleView(){
 
@@ -124,20 +155,19 @@ public class VocalSellectFragment extends Fragment {
         rv_vocalList.setLayoutManager(llm);
 
         vocalSelectAdapter = new VocalSelectAdapter(getActivity());
+        vocalSelectAdapter.setOnclickLisener(this);
 
         rv_vocalList.setAdapter(vocalSelectAdapter);
 
     }
 
-    public void RequestToYoutube(){
+    public void RequestToYoutube(String queryTerm){
         try {
 
             YouTube youtube = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), new HttpRequestInitializer() {
                 public void initialize(HttpRequest request) throws IOException {
                 }
             }).setApplicationName("youtube-cmdline-search-sample").build();
-
-            String queryTerm = search_vocal.getQuery().toString();
 
             YouTube.Search.List search = youtube.search().list("id,snippet");
 
@@ -164,35 +194,31 @@ public class VocalSellectFragment extends Fragment {
 
     }
 
-    private boolean validateSearch(){
 
+    private boolean validateSearch(){
 
         return true;
     }
 
+    @Override
+    public void OnClickVideo(int position) {
 
+        Intent i = new Intent(getContext(), YoutubePlayActivity.class);
 
-    private void setVocal(String url,String vocalName){
+        i.putExtra("youtube_id",searchResultList.get(position).getId().getVideoId());
+        i.putExtra("youtube_name",searchResultList.get(position).getSnippet().getTitle());
 
-        MySharedPreference.setPrefVocalUrl(getActivity(),url);
-        MySharedPreference.setPrefVocalName(getActivity(),vocalName);
-        Toast.makeText(getContext(),"working well",Toast.LENGTH_LONG);
+        startActivity(i);
     }
-
-    private String getVocalList(){
-
-        String listJson ="";
-
-        return listJson;
-    }
-
 
     class SearchyoutubeThread extends AsyncTask<Object,Object,Object> {
+
+        private boolean isRunable =false;
 
         @Override
         protected Object doInBackground(Object... params) {
 
-            RequestToYoutube();
+                RequestToYoutube((String)params[0]);
 
             return null;
         }
@@ -203,9 +229,9 @@ public class VocalSellectFragment extends Fragment {
 
             if (searchResultList != null) {
                 vocalSelectAdapter.setYoutubeList(searchResultList);
+                endProgressBar();
             }
         }
     }
-
 
 }

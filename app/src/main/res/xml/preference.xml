@@ -5,4 +5,8 @@
         android:key="@string/pref_vocal_key"
         android:title="@string/pref_vocal_title"
         android:summary="@string/pref_vocal_summary"/>
+    <Preference
+        android:key="@string/pref_teacher_key"
+        android:title="@string/pref_teacher_title"
+        android:summary="@string/pref_teacher_summary"/>
 </PreferenceScreen>

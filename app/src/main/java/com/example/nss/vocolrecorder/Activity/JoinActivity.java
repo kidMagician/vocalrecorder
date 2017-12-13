@@ -2,22 +2,26 @@ package com.example.nss.vocolrecorder.Activity;
 
 import android.app.ProgressDialog;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Patterns;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.nss.vocolrecorder.BuildConfig;
+import com.example.nss.vocolrecorder.Listener.AsynkFinishLisener;
+import com.example.nss.vocolrecorder.Listener.MySharedPreference;
 import com.example.nss.vocolrecorder.util.HtttpManagement.HConnecter.HttpConnecter;
 import com.example.nss.vocolrecorder.util.HtttpManagement.HttpConnecterManager;
 import com.example.nss.vocolrecorder.R;
 import com.example.nss.vocolrecorder.etc.NetworkChecker;
 
-public class JoinActivity extends AppCompatActivity {
+public class JoinActivity extends AppCompatActivity implements AsynkFinishLisener {
 
     private static final String TAG = "JoinActivity";
 
@@ -39,7 +43,6 @@ public class JoinActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join);
-
 
         edit_ID =(EditText)findViewById(R.id.edit_ID);
         edit_nickname=(EditText)findViewById(R.id.edit_nickname);
@@ -90,9 +93,15 @@ public class JoinActivity extends AppCompatActivity {
                 authData.put("username",str_ID);
                 authData.put("nickname",str_nickname);
                 authData.put("password",str_pass);
+                authData.put("teacher_nick", MySharedPreference.getPrefTeacherNick(getApplicationContext()));
+
+                if(registerHttpThread !=null){
+
+                    registerHttpThread.cancel(true);
+                }
 
                 registerHttpThread = new RegisterHttpThread();
-
+                registerHttpThread.setAsynkFinishLisener(this);
                 registerHttpThread.execute(BuildConfig.SERVER_URL+"/auth/join",authData);
 
             }
@@ -144,6 +153,11 @@ public class JoinActivity extends AppCompatActivity {
         return valid;
     }
 
+    @Override
+    public void finishAvtivity() {
+
+        finish();
+    }
 
     @Override
     protected void onDestroy() {
@@ -155,12 +169,23 @@ public class JoinActivity extends AppCompatActivity {
 
         }
 
+        if(progressDialog !=null){
+
+            progressDialog.dismiss();
+
+            progressDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        }
+
     }
+
+
 
     class RegisterHttpThread extends AsyncTask<Object,String,String>{
 
 //        HRegisterConnecter httpConnecter;
         Boolean checkSuc;
+        AsynkFinishLisener asynkFinishLisener;
 
         RegisterHttpThread(){
 
@@ -173,9 +198,9 @@ public class JoinActivity extends AppCompatActivity {
 
 //            httpConnecter =new HRegisterConnecter();
 
-            HttpConnecter httpConnecter =httpConnecterManager.GetHttpConnecter(HttpConnecterManager.REGISTER);
+            HttpConnecter httpConnecter =httpConnecterManager.GetHttpConnecter(HttpConnecterManager.POST);
 
-            checkSuc = (Boolean)httpConnecter.RequestPost(params[0].toString(),(ContentValues)params[1]);
+            checkSuc = (Boolean)httpConnecter.Request(params[0].toString(),(ContentValues)params[1]);
 
             return null;
         }
@@ -184,18 +209,29 @@ public class JoinActivity extends AppCompatActivity {
         protected void onPostExecute(String s){
             super.onPostExecute(s);
 
-            progressDialog.dismiss();
 
             if(checkSuc){
 
-                JoinActivity.this.finish();
+                asynkFinishLisener.finishAvtivity();
 
             }else{
 
                 Toast.makeText(JoinActivity.this,"failed register",Toast.LENGTH_LONG).show();
 
+                if(progressDialog !=null){
+
+                    progressDialog.dismiss();
+
+                    progressDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+                }
+
+
             }
 
+        }
+        public void setAsynkFinishLisener(AsynkFinishLisener asynkFinishLisener) {
+            this.asynkFinishLisener = asynkFinishLisener;
         }
     }
 
