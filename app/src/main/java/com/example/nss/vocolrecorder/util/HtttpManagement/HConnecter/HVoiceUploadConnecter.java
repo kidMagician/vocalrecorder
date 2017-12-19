@@ -61,7 +61,7 @@ public class HVoiceUploadConnecter implements HttpConnecter {
             conn.setRequestProperty("User-Agent", "Android Multipart HTTP Client 1.0");
             conn.setRequestProperty(
                     "Content-Type", "multipart/form-data;boundary=" + boundary);
-            conn.setRequestProperty("Authentication","token "+token);
+            conn.setRequestProperty("Authorization","Token "+token.GetValue().toString());
 
             DataOutputStream dataOutputStream = new DataOutputStream( conn.getOutputStream());
 

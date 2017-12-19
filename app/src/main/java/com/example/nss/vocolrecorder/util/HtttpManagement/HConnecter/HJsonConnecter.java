@@ -30,21 +30,21 @@ public class HJsonConnecter extends AbstarctHttpConnecter implements HttpConnect
 
     }
 
-
     public String Request(String urlStr,ContentValues params){
 
         try{
 
             String strParams = ConvertToString(params);
-
-            urlStr += "?"+strParams.replace(" ","");
+            if(strParams !=""){
+                urlStr += "?"+strParams.replace(" ","");
+            }
 
             URL url = new URL(urlStr);
 
             httpURLConnection =(HttpURLConnection) url.openConnection();
 
             httpURLConnection.setRequestMethod("GET");
-            httpURLConnection.setRequestProperty("Authentication","token "+token);
+            httpURLConnection.setRequestProperty("Authorization","Token " + token.GetValue().toString());
 
             if(httpURLConnection.getResponseCode() != HttpURLConnection.HTTP_OK){
 

@@ -25,18 +25,14 @@ public class ListeningFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     public static ListeningFragment newInstance() {
         ListeningFragment fragment = new ListeningFragment();
         return fragment;
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
 
     }
 
@@ -47,6 +43,7 @@ public class ListeningFragment extends Fragment {
         View v= inflater.inflate(R.layout.fragment_listening, container, false);
 
         pager = (ViewPager) v.findViewById(R.id.pager);
+
         pager.setAdapter(new MyAdapter(getActivity().getSupportFragmentManager()));
         tabs = (PagerSlidingTabStrip) v.findViewById(R.id.tabs);
         tabs.setViewPager(pager);
@@ -69,7 +66,7 @@ public class ListeningFragment extends Fragment {
                     return FileViwerFragment.newInstance(position);
                 }
                 case 1:{
-                    return FileViwerFragment.newInstance(position);
+                    return FeedBackFragment.newInstance(position);
                 }
             }
             return null;

@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.nss.vocolrecorder.BuildConfig;
 import com.example.nss.vocolrecorder.Listener.MySharedPreference;
@@ -39,6 +40,7 @@ public class YoutubePlayActivity extends YouTubeFailureRecoveryActivity {
             public void onClick(View view) {
                 MySharedPreference.setPrefVocalUrl(YoutubePlayActivity.this,youtube_id);
                 MySharedPreference.setPrefVocalName(YoutubePlayActivity.this,youtube_name);
+                Toast.makeText(YoutubePlayActivity.this,getString(R.string.toast_vocal_selected),Toast.LENGTH_LONG).show();
             }
         });
 

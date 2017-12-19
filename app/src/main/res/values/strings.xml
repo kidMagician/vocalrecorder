@@ -17,5 +17,12 @@
     <string name="pref_teacher_title">teacher setting</string>
     <string name="pref_teacher_summary">teacher</string>
 
+    <!--toast-->
+    <string name="toast_vocal_selected">good!! your vocal is sellected</string>
+    
+    <string name="warning_select_video">you sould select vidieo! then you can record</string>
+    <string name="recording_button">Recording...</string>
+    <string name="before_recording_button">Tap to the Button to start recording</string>
+
 
 </resources>

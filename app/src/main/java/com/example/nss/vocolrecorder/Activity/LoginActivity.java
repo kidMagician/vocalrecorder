@@ -118,8 +118,6 @@ public class LoginActivity extends AppCompatActivity implements AsynkFinishLisen
                 authHandler.setAsynkFinishLisener(this);
                 authHandler.execute(BuildConfig.SERVER_URL+"/auth/login", authData);
 
-
-
             }else{
                 Toast.makeText(LoginActivity.this,"not connected network",Toast.LENGTH_LONG).show();
 
@@ -161,7 +159,7 @@ public class LoginActivity extends AppCompatActivity implements AsynkFinishLisen
     @Override
     public void finishAvtivity() {
 
-        changeLauncher();
+//        changeLauncher();
 
         finish();
 
@@ -170,11 +168,11 @@ public class LoginActivity extends AppCompatActivity implements AsynkFinishLisen
     private void changeLauncher(){
 
         String s = getApplicationContext().getPackageName();
-        ComponentName cm = new ComponentName(s, s+".AliasActivity");
+        ComponentName cm = new ComponentName(s, s+".Activity.AliasActivity");
         ComponentName cm2 = new ComponentName(s, s+".Activity.LoginActivity");
         PackageManager pm = this.getPackageManager();
         pm.setComponentEnabledSetting(cm, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
-        pm.setComponentEnabledSetting(cm2, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
+        pm.setComponentEnabledSetting(cm2, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.COMPONENT_ENABLED_STATE_DEFAULT);
     }
 
 

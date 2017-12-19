@@ -13,6 +13,7 @@ import com.example.nss.vocolrecorder.util.HtttpManagement.HConnecter.HVoiceUploa
 import com.example.nss.vocolrecorder.util.HtttpManagement.HConnecter.HttpConnecter;
 import com.example.nss.vocolrecorder.util.HtttpManagement.HttpConnecterManager;
 
+import java.util.StringJoiner;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -40,7 +41,7 @@ public class MySharedPreference {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 
-        return sharedPreferences.getString(PREF_VOCAL_URL,"None");
+        return sharedPreferences.getString(PREF_VOCAL_URL,null);
     }
 
     public static void setPrefVocalName(Context context, String vocalName){
@@ -56,7 +57,7 @@ public class MySharedPreference {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 
-        return sharedPreferences.getString(PREF_VOCAL_NAME,"None");
+        return sharedPreferences.getString(PREF_VOCAL_NAME,null);
     }
 
     public static void setPrefTeacherNick(Context context, String teacher_nick){

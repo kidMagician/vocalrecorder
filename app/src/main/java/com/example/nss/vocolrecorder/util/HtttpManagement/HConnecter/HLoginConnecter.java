@@ -89,7 +89,7 @@ public class HLoginConnecter extends AbstarctHttpConnecter implements HttpConnec
 
                         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("pref_token",token.toString());
+                        editor.putString("pref_token",token.GetValue().toString());
                         editor.commit();
 
 

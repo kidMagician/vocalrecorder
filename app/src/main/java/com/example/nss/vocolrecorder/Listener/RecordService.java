@@ -119,8 +119,6 @@ public class RecordService extends Service {
             values.put("length",endTimeMile-startTimeMile);
             values.put("savedDate",mTIme);
             values.put("youtube_id",MySharedPreference.getPrefVocalUrl(getApplicationContext()));
-            values.put("teacher_nick",MySharedPreference.getPrefTeacherNick(getApplicationContext()));
-            values.put("student_nick",MySharedPreference.getPrefMyNick(getApplicationContext()));
 
             httpHandler = new HttpHandler();
             httpHandler.execute(BuildConfig.SERVER_URL+"/voiceTraining/voiceUpload",values);

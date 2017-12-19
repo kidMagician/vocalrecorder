@@ -11,37 +11,57 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar"
         />
+
+    <com.astuetz.PagerSlidingTabStrip
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:elevation="4dp"
+        />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="500px"
+        android:background="@android:color/white" />
+
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:id="@+id/container"
-        >
-
-    </FrameLayout>
+        android:id="@+id/container"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        >
         <android.support.v7.widget.AppCompatImageButton
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="@android:color/transparent"
-            android:src="@drawable/if_home_126572"
             android:id="@+id/btn_home"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="25dp"
             />
         <android.support.v7.widget.AppCompatImageButton
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="@android:color/transparent"
-            android:src="@drawable/if_add_126583"
             android:id="@+id/btn_record"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
             />
         <android.support.v7.widget.AppCompatImageButton
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="@android:color/transparent"
-            android:src="@drawable/if_alarm_126584"
-            android:id="@+id/btn_alert"/>
+            android:id="@+id/btn_alert"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="70dp"
+            />
     </LinearLayout>
 
 

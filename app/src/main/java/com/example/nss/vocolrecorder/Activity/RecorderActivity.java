@@ -1,15 +1,18 @@
 package com.example.nss.vocolrecorder.Activity;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.nss.vocolrecorder.Adapter.VocalSelectAdapter;
 import com.example.nss.vocolrecorder.BuildConfig;
 import com.example.nss.vocolrecorder.Listener.MySharedPreference;
 import com.example.nss.vocolrecorder.Listener.RecordService;
@@ -25,6 +28,8 @@ public class RecorderActivity extends YouTubeFailureRecoveryActivity {
     private YouTubePlayerView youTubeView;
     private FloatingActionButton btn_play;
     private TextView txt_play;
+    private TextView txt_videoname;
+    private ImageButton btn_select;
 
     YouTubePlayer player_youtube;
 
@@ -47,14 +52,48 @@ public class RecorderActivity extends YouTubeFailureRecoveryActivity {
 
         btn_play = (FloatingActionButton)findViewById(R.id.btn_play);
         txt_play = (TextView) findViewById(R.id.txt_play);
+        txt_videoname=(TextView) findViewById(R.id.txt_video_name);
         youTubeView = (YouTubePlayerView) findViewById(R.id.youtube_view);
+        btn_select=(ImageButton) findViewById(R.id.btn_select_vocal);
+
+        initYoutube();
+
+        initButton();
+
+    }
+
+
+
+    private void initYoutube(){
 
         youTubeView.initialize(BuildConfig.YOUTUBE_API_KEY, this);
-
         youtube_id= MySharedPreference.getPrefVocalUrl(RecorderActivity.this);
         youtube_name =MySharedPreference.getPrefVocalName(RecorderActivity.this);
 
-        txt_play.setText(youtube_name);
+        if(youtube_id ==null && youtube_name==null){
+
+            txt_videoname.setText(getText(R.string.warning_select_video));
+
+        }else{
+
+            txt_videoname.setText(youtube_name);
+
+        }
+    }
+
+    private void initButton(){
+
+        btn_select.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i = new Intent(RecorderActivity.this, VocalSellectActivity.class);
+
+                startActivity(i);
+
+            }
+        });
+
 
         btn_play.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +104,8 @@ public class RecorderActivity extends YouTubeFailureRecoveryActivity {
         });
 
     }
+
+
 
     private void Play() {
 
@@ -85,7 +126,7 @@ public class RecorderActivity extends YouTubeFailureRecoveryActivity {
                 folder.mkdir();
             }
 
-            txt_play.setText("Recoding...");
+            txt_play.setText(getText(R.string.recording_button));
 
             startService(intent);
 
@@ -99,7 +140,7 @@ public class RecorderActivity extends YouTubeFailureRecoveryActivity {
 
             Intent intent = new Intent(RecorderActivity.this, RecordService.class);
 
-            txt_play.setText("tap to the start recording");
+            txt_play.setText(R.string.before_recording_button);
 
             stopService(intent);
 
@@ -130,7 +171,11 @@ public class RecorderActivity extends YouTubeFailureRecoveryActivity {
                                         boolean wasRestored) {
         if (!wasRestored) {
             player_youtube =player;
-            player.cueVideo(youtube_id);
+
+            if(youtube_id!=null){
+                player.cueVideo(youtube_id);
+            }
+
         }
     }
 

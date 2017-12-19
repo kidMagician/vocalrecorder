@@ -11,8 +11,7 @@ import android.view.ViewGroup;
 import com.example.nss.vocolrecorder.R;
 
 
-public class HomeFragment extends Fragment {
-
+public class HomeFragment extends android.support.v4.app.Fragment {
 
     public HomeFragment() {
         // Required empty public constructor

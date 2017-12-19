@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.nss.vocolrecorder.Listener.MySharedPreference;
 import com.example.nss.vocolrecorder.R;
@@ -64,6 +65,9 @@ public class VocalSelectAdapter extends RecyclerView.Adapter<VocalSelectAdapter.
             public void onClick(View view) {
                 MySharedPreference.setPrefVocalUrl(context,searchResultList.get(holder.getPosition()).getId().getVideoId());
                 MySharedPreference.setPrefVocalName(context,searchResultList.get(holder.getPosition()).getSnippet().getTitle());
+
+                Toast.makeText(context,context.getString(R.string.toast_vocal_selected),Toast.LENGTH_LONG).show();
+
             }
         });
 
@@ -73,21 +77,6 @@ public class VocalSelectAdapter extends RecyclerView.Adapter<VocalSelectAdapter.
 
                 vocalItemClickLisener.OnClickVideo(holder.getPosition());
 
-//                YoutubePlayFragment youtubeFragment=(YoutubePlayFragment)((FragmentActivity)context).getSupportFragmentManager().findFragmentById(R.id.youtubeFragment);
-//                youtubeFragment.initialize(BuildConfig.YOUTUBE_API_KEY,
-//                        new YoutubePlayer.OnInitializedListener() {
-//                            @Override
-//                            public void onInitializationSuccess(YouTubePlayer.Provider provider,
-//                                                                YouTubePlayer youTubePlayer, boolean b) {
-//                                // do any work here to cue video, play video, etc.
-//                                youTubePlayer.cueVideo("5xVh-7ywKpE");
-//                            }
-//                            @Override
-//                            public void onInitializationFailure(YouTubePlayer.Provider provider,
-//                                                                YouTubeInitializationResult youTubeInitializationResult) {
-//
-//                            }
-//                        });
 
             }
         });

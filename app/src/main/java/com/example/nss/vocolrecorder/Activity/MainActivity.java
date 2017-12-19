@@ -2,6 +2,9 @@ package com.example.nss.vocolrecorder.Activity;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -10,9 +13,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 
-;
-
+import com.astuetz.PagerSlidingTabStrip;
 import com.example.nss.vocolrecorder.Fragment.FeedBackFragment;
+import com.example.nss.vocolrecorder.Fragment.FileViwerFragment;
 import com.example.nss.vocolrecorder.Fragment.HomeFragment;
 import com.example.nss.vocolrecorder.Fragment.ListeningFragment;
 import com.example.nss.vocolrecorder.Listener.MySharedPreference;
@@ -25,6 +28,11 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton btn_home;
     private ImageButton btn_record;
     private ImageButton btn_alert;
+    private ViewPager pager;
+    private PagerSlidingTabStrip tabs;
+
+    public final String FRAGMENT_HOME_TAG ="fragment_home";
+    public final String FRAGMENT_PRACTICE_TAG ="fragment_practice";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
         btn_home =(ImageButton) findViewById(R.id.btn_home);
         btn_record=(ImageButton) findViewById(R.id.btn_record);
         btn_alert=(ImageButton) findViewById(R.id.btn_alert);
+        pager = (ViewPager) findViewById(R.id.pager);
+        tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
 
         btn_home.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent i = new Intent(MainActivity.this,RecorderActivity.class);
                 startActivity(i);
+
+                startActivity(i);
+
             }
         });
 
@@ -60,8 +73,19 @@ public class MainActivity extends AppCompatActivity {
         authenficate();
         setupToolbar();
         setupView();
+        initPager();
 
     }
+
+    private void initPager(){
+
+
+
+        pager.setAdapter(new MyAdapter(getSupportFragmentManager()));
+        tabs.setViewPager(pager);
+
+    }
+
 
     private void authenficate(){
         String tokenStr =MySharedPreference.getPrefToken(getApplicationContext());
@@ -77,33 +101,54 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupView(){
 
-        Fragment homeFragment = HomeFragment.newInstance();
+        pager.setVisibility(View.GONE);
+        tabs.setVisibility(View.GONE);
 
-        getFragmentManager().beginTransaction().replace(R.id.container,homeFragment).commit();
+        android.support.v4.app.Fragment homeFragment = HomeFragment.newInstance();
 
+        getSupportFragmentManager().beginTransaction().replace(R.id.container,homeFragment,FRAGMENT_HOME_TAG).addToBackStack(FRAGMENT_HOME_TAG).commitAllowingStateLoss();
+
+
+        initButton();
+
+        btn_home.setImageResource(R.drawable.mail_black_envelope_symbol2);
+    }
+
+    private void initButton(){
+
+        btn_home.setImageResource(R.drawable.mail_black_envelope_symbol);
+        btn_alert.setImageResource(R.drawable.mail_black_envelope_symbol);
+        btn_record.setImageResource(R.drawable.mail_black_envelope_symbol);
     }
 
 
     private void activateHomefragment(){
 
-        Fragment homeFragment = HomeFragment.newInstance();
+        initButton();
 
-        getFragmentManager().beginTransaction().replace(R.id.container,homeFragment).commit();
+        pager.setVisibility(View.GONE);
+        tabs.setVisibility(View.GONE);
 
+        android.support.v4.app.Fragment homeFragment = HomeFragment.newInstance();
 
+        getSupportFragmentManager().beginTransaction().replace(R.id.container,homeFragment,FRAGMENT_HOME_TAG).addToBackStack(FRAGMENT_HOME_TAG).commitAllowingStateLoss();
+
+        btn_home.setImageResource(R.drawable.mail_black_envelope_symbol2);
 
     }
 
     private void activateAlertFragment(){
 
-//        Fragment alertFragment = FeedBackFragment.newInstance();
+        initButton();
+
+        pager.setVisibility(View.VISIBLE);
+        tabs.setVisibility(View.VISIBLE);
+
+//        android.support.v4.app.Fragment alertFragment = ListeningFragment.newInstance();
 //
-//        getFragmentManager().beginTransaction().replace(R.id.container,alertFragment).commit();
-        android.support.v4.app.Fragment alertFragment = ListeningFragment.newInstance();
+//        getSupportFragmentManager().beginTransaction().replace(R.id.container,alertFragment,FRAGMENT_PRACTICE_TAG).addToBackStack(FRAGMENT_PRACTICE_TAG).commitAllowingStateLoss();
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.container,alertFragment).commit();
-
-
+        btn_alert.setImageResource(R.drawable.mail_black_envelope_symbol2);
     }
 
     private void setupToolbar(){
@@ -139,6 +184,39 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public class MyAdapter extends FragmentPagerAdapter {
+        private String[] titles = { getString(R.string.tab_title_record),
+                getString(R.string.tab_title_saved_recordings) };
+
+        public MyAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public android.support.v4.app.Fragment getItem(int position) {
+            switch(position){
+                case 0:{
+                    return FileViwerFragment.newInstance(position);
+                }
+                case 1:{
+                    return FeedBackFragment.newInstance(position);
+                }
+            }
+            return null;
+        }
+
+        @Override
+        public int getCount() {
+            return titles.length;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return titles[position];
+        }
+
     }
 
 }
