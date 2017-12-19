@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
 import com.astuetz.PagerSlidingTabStrip;
@@ -45,10 +46,20 @@ public class MainActivity extends AppCompatActivity {
         pager = (ViewPager) findViewById(R.id.pager);
         tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
 
+        setButton();
+        authenficate();
+        setupToolbar();
+        initView();
+        initPager();
+
+    }
+
+    private void setButton(){
+
         btn_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                activateHomefragment();
+                switchToHome();
             }
         });
 
@@ -59,33 +70,24 @@ public class MainActivity extends AppCompatActivity {
                 Intent i = new Intent(MainActivity.this,RecorderActivity.class);
                 startActivity(i);
 
-                startActivity(i);
-
             }
         });
 
         btn_alert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                activateAlertFragment();
+                switchToPractice();
             }
         });
-        authenficate();
-        setupToolbar();
-        setupView();
-        initPager();
 
     }
 
     private void initPager(){
 
-
-
         pager.setAdapter(new MyAdapter(getSupportFragmentManager()));
         tabs.setViewPager(pager);
 
     }
-
 
     private void authenficate(){
         String tokenStr =MySharedPreference.getPrefToken(getApplicationContext());
@@ -95,11 +97,9 @@ public class MainActivity extends AppCompatActivity {
         HttpConnecterManager httpConnecterManager= (HttpConnecterManager)getApplicationContext();
         httpConnecterManager.setAuth(token);
 
-
     }
 
-
-    private void setupView(){
+    private void initView(){
 
         pager.setVisibility(View.GONE);
         tabs.setVisibility(View.GONE);
@@ -107,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
         android.support.v4.app.Fragment homeFragment = HomeFragment.newInstance();
 
         getSupportFragmentManager().beginTransaction().replace(R.id.container,homeFragment,FRAGMENT_HOME_TAG).addToBackStack(FRAGMENT_HOME_TAG).commitAllowingStateLoss();
-
 
         initButton();
 
@@ -122,9 +121,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void activateHomefragment(){
-
-        initButton();
+    private void switchToHome(){
 
         pager.setVisibility(View.GONE);
         tabs.setVisibility(View.GONE);
@@ -133,22 +130,44 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction().replace(R.id.container,homeFragment,FRAGMENT_HOME_TAG).addToBackStack(FRAGMENT_HOME_TAG).commitAllowingStateLoss();
 
+        initButton();
+
         btn_home.setImageResource(R.drawable.mail_black_envelope_symbol2);
 
     }
 
-    private void activateAlertFragment(){
+    private void setVisibiliyTab(boolean visible){
+
+        if(visible){
+
+            pager.setVisibility(View.VISIBLE);
+            tabs.setVisibility(View.VISIBLE);
+
+
+        }else{
+
+            pager.setVisibility(View.GONE);
+            tabs.setVisibility(View.GONE);
+
+        }
+
+    }
+
+
+    private void switchToPractice(){
 
         initButton();
 
         pager.setVisibility(View.VISIBLE);
         tabs.setVisibility(View.VISIBLE);
 
+        btn_alert.setImageResource(R.drawable.mail_black_envelope_symbol2);
+
 //        android.support.v4.app.Fragment alertFragment = ListeningFragment.newInstance();
 //
 //        getSupportFragmentManager().beginTransaction().replace(R.id.container,alertFragment,FRAGMENT_PRACTICE_TAG).addToBackStack(FRAGMENT_PRACTICE_TAG).commitAllowingStateLoss();
 
-        btn_alert.setImageResource(R.drawable.mail_black_envelope_symbol2);
+
     }
 
     private void setupToolbar(){
