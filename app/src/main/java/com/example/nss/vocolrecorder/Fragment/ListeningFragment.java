@@ -1,7 +1,5 @@
 package com.example.nss.vocolrecorder.Fragment;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.astuetz.PagerSlidingTabStrip;
-import com.example.nss.vocolrecorder.Adapter.FeedBackViewAdapter;
 import com.example.nss.vocolrecorder.R;
 
 
@@ -20,6 +17,7 @@ public class ListeningFragment extends Fragment {
 
     private PagerSlidingTabStrip tabs;
     private ViewPager pager;
+    private MyAdapter adapter;
 
     public ListeningFragment() {
         // Required empty public constructor
@@ -44,19 +42,25 @@ public class ListeningFragment extends Fragment {
 
         pager = (ViewPager) v.findViewById(R.id.pager);
 
-        pager.setAdapter(new MyAdapter(getActivity().getSupportFragmentManager()));
+        adapter =new MyAdapter(getActivity().getSupportFragmentManager());
+
+        pager.setAdapter(adapter);
         tabs = (PagerSlidingTabStrip) v.findViewById(R.id.tabs);
         tabs.setViewPager(pager);
 
         return v;
     }
 
+
+
     public class MyAdapter extends FragmentPagerAdapter {
         private String[] titles = { getString(R.string.tab_title_record),
                 getString(R.string.tab_title_saved_recordings) };
 
+
         public MyAdapter(FragmentManager fm) {
             super(fm);
+
         }
 
         @Override
@@ -66,7 +70,7 @@ public class ListeningFragment extends Fragment {
                     return FileViwerFragment.newInstance(position);
                 }
                 case 1:{
-                    return FeedBackFragment.newInstance(position);
+                    return FileViwerFragment.newInstance(position);
                 }
             }
             return null;
@@ -74,8 +78,12 @@ public class ListeningFragment extends Fragment {
 
         @Override
         public int getCount() {
-            return titles.length;
+
+                return titles.length;
+
+
         }
+
 
         @Override
         public CharSequence getPageTitle(int position) {

@@ -6,8 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
-import android.provider.Settings;
 import android.util.Log;
+
+import com.example.nss.vocolrecorder.item.VoiceItem;
 
 /**
  * Created by NSS on 9/3/2017.

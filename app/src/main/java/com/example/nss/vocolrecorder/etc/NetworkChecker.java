@@ -22,15 +22,15 @@ public class NetworkChecker {
     public boolean CheckConnected()
     {
         NetworkInfo netInfo = connMng.getActiveNetworkInfo();
+        if(netInfo!=null){
+            if(netInfo.isConnected()){
 
-        if(netInfo.isConnected()){
+                return true;
 
-            return true;
-
-        }else{
-
-            return false;
+            }
         }
+
+       return false;
 
     }
 

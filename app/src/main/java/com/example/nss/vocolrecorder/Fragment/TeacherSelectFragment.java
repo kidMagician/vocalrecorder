@@ -1,45 +1,32 @@
 package com.example.nss.vocolrecorder.Fragment;
 
 import android.content.ContentValues;
-import android.content.Context;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.JsonReader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.example.nss.vocolrecorder.Adapter.TeacherSelectAdapter;
 import com.example.nss.vocolrecorder.BuildConfig;
 import com.example.nss.vocolrecorder.Listener.OnListChangeListener;
-import com.example.nss.vocolrecorder.Listener.TeacherItem;
+import com.example.nss.vocolrecorder.item.TeacherItem;
 import com.example.nss.vocolrecorder.R;
 import com.example.nss.vocolrecorder.etc.NetworkChecker;
 import com.example.nss.vocolrecorder.util.HtttpManagement.HConnecter.HJsonConnecter;
 import com.example.nss.vocolrecorder.util.HtttpManagement.HConnecter.HttpConnecter;
 import com.example.nss.vocolrecorder.util.HtttpManagement.HttpConnecterManager;
-import com.google.api.client.json.Json;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 
 public class TeacherSelectFragment extends Fragment {

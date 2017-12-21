@@ -29,11 +29,11 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton btn_home;
     private ImageButton btn_record;
     private ImageButton btn_alert;
-    private ViewPager pager;
-    private PagerSlidingTabStrip tabs;
+//    private ViewPager pager;
+//    private PagerSlidingTabStrip tabs;
 
     public final String FRAGMENT_HOME_TAG ="fragment_home";
-    public final String FRAGMENT_PRACTICE_TAG ="fragment_practice";
+    public final String FRAGMENT_FEEDBACK_TAG ="fragment_feedback";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,14 +43,14 @@ public class MainActivity extends AppCompatActivity {
         btn_home =(ImageButton) findViewById(R.id.btn_home);
         btn_record=(ImageButton) findViewById(R.id.btn_record);
         btn_alert=(ImageButton) findViewById(R.id.btn_alert);
-        pager = (ViewPager) findViewById(R.id.pager);
-        tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+//        pager = (ViewPager) findViewById(R.id.pager);
+//        tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
 
         setButton();
         authenficate();
         setupToolbar();
         initView();
-        initPager();
+//        initPager();
 
     }
 
@@ -76,18 +76,18 @@ public class MainActivity extends AppCompatActivity {
         btn_alert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                switchToPractice();
+                switchToFeedback();
             }
         });
 
     }
 
-    private void initPager(){
-
-        pager.setAdapter(new MyAdapter(getSupportFragmentManager()));
-        tabs.setViewPager(pager);
-
-    }
+//    private void initPager(){
+//
+//        pager.setAdapter(new MyAdapter(getSupportFragmentManager()));
+//        tabs.setViewPager(pager);
+//
+//    }
 
     private void authenficate(){
         String tokenStr =MySharedPreference.getPrefToken(getApplicationContext());
@@ -101,12 +101,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void initView(){
 
-        pager.setVisibility(View.GONE);
-        tabs.setVisibility(View.GONE);
 
         android.support.v4.app.Fragment homeFragment = HomeFragment.newInstance();
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.container,homeFragment,FRAGMENT_HOME_TAG).addToBackStack(FRAGMENT_HOME_TAG).commitAllowingStateLoss();
+        getSupportFragmentManager().beginTransaction().replace(R.id.container,homeFragment,FRAGMENT_HOME_TAG).commit();
 
         initButton();
 
@@ -119,16 +117,11 @@ public class MainActivity extends AppCompatActivity {
         btn_alert.setImageResource(R.drawable.mail_black_envelope_symbol);
         btn_record.setImageResource(R.drawable.mail_black_envelope_symbol);
     }
-
-
     private void switchToHome(){
 
-        pager.setVisibility(View.GONE);
-        tabs.setVisibility(View.GONE);
 
         android.support.v4.app.Fragment homeFragment = HomeFragment.newInstance();
-
-        getSupportFragmentManager().beginTransaction().replace(R.id.container,homeFragment,FRAGMENT_HOME_TAG).addToBackStack(FRAGMENT_HOME_TAG).commitAllowingStateLoss();
+        getSupportFragmentManager().beginTransaction().replace(R.id.container,homeFragment,FRAGMENT_HOME_TAG).commit();
 
         initButton();
 
@@ -136,37 +129,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void setVisibiliyTab(boolean visible){
-
-        if(visible){
-
-            pager.setVisibility(View.VISIBLE);
-            tabs.setVisibility(View.VISIBLE);
-
-
-        }else{
-
-            pager.setVisibility(View.GONE);
-            tabs.setVisibility(View.GONE);
-
-        }
-
-    }
-
-
-    private void switchToPractice(){
+    private void switchToFeedback(){
 
         initButton();
 
-        pager.setVisibility(View.VISIBLE);
-        tabs.setVisibility(View.VISIBLE);
-
         btn_alert.setImageResource(R.drawable.mail_black_envelope_symbol2);
 
-//        android.support.v4.app.Fragment alertFragment = ListeningFragment.newInstance();
-//
-//        getSupportFragmentManager().beginTransaction().replace(R.id.container,alertFragment,FRAGMENT_PRACTICE_TAG).addToBackStack(FRAGMENT_PRACTICE_TAG).commitAllowingStateLoss();
+        android.support.v4.app.Fragment feedBackFragment = FeedBackFragment.newInstance();
 
+        getSupportFragmentManager().beginTransaction().replace(R.id.container,feedBackFragment,FRAGMENT_FEEDBACK_TAG).commit();
 
     }
 
@@ -205,37 +176,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public class MyAdapter extends FragmentPagerAdapter {
-        private String[] titles = { getString(R.string.tab_title_record),
-                getString(R.string.tab_title_saved_recordings) };
 
-        public MyAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public android.support.v4.app.Fragment getItem(int position) {
-            switch(position){
-                case 0:{
-                    return FileViwerFragment.newInstance(position);
-                }
-                case 1:{
-                    return FeedBackFragment.newInstance(position);
-                }
-            }
-            return null;
-        }
-
-        @Override
-        public int getCount() {
-            return titles.length;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return titles[position];
-        }
-
-    }
 
 }

@@ -3,7 +3,6 @@ package com.example.nss.vocolrecorder.Adapter;
 
 
 import android.content.Context;
-import android.icu.util.TimeUnit;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
@@ -12,15 +11,13 @@ import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 
 import com.example.nss.vocolrecorder.Fragment.PlayBackFragment;
 import com.example.nss.vocolrecorder.Listener.DBHelper;
 import com.example.nss.vocolrecorder.Listener.OnDataBaseChangeListner;
-import com.example.nss.vocolrecorder.Listener.VoiceItem;
+import com.example.nss.vocolrecorder.item.VoiceItem;
 import com.example.nss.vocolrecorder.R;
 import android.view.LayoutInflater;
-import android.widget.DatePicker;
 import android.widget.TextView;
 
 /**

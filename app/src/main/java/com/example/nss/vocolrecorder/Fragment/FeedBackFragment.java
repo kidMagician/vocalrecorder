@@ -1,8 +1,6 @@
 package com.example.nss.vocolrecorder.Fragment;
 
-import android.app.Fragment;
 import android.content.ContentValues;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,18 +8,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.nss.vocolrecorder.Adapter.FeedBackViewAdapter;
 import com.example.nss.vocolrecorder.BuildConfig;
-import com.example.nss.vocolrecorder.Listener.FeedBackItem;
-import com.example.nss.vocolrecorder.Listener.MySharedPreference;
+import com.example.nss.vocolrecorder.item.FeedBackItem;
 import com.example.nss.vocolrecorder.R;
 import com.example.nss.vocolrecorder.etc.NetworkChecker;
 import com.example.nss.vocolrecorder.util.HtttpManagement.HConnecter.HttpConnecter;
 import com.example.nss.vocolrecorder.util.HtttpManagement.HttpConnecterManager;
-
-import java.util.List;
 
 
 public class FeedBackFragment extends android.support.v4.app.Fragment {
@@ -32,27 +26,20 @@ public class FeedBackFragment extends android.support.v4.app.Fragment {
     private RecyclerView rv_feedback;
     private FeedBackViewAdapter adapter;
 
-    private static final String ARG_POSITION = "position";
-    private int position;
 
     public FeedBackFragment() {
         // Required empty public constructor
     }
 
 
-    public static FeedBackFragment newInstance(int position) {
+    public static FeedBackFragment newInstance() {
         FeedBackFragment fragment = new FeedBackFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_POSITION,position);
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        position =getArguments().getInt(ARG_POSITION);
 
     }
 
@@ -91,10 +78,14 @@ public class FeedBackFragment extends android.support.v4.app.Fragment {
 
                 feedBackRequester.cancel(true);
 
+            }else{
+
+                feedBackRequester = new FeedBackRequester();
+                feedBackRequester.execute(BuildConfig.SERVER_URL+"/voiceTraining/feedBack",null);
+
             }
 
-        feedBackRequester = new FeedBackRequester();
-        feedBackRequester.execute(BuildConfig.SERVER_URL+"/voiceTraining/feedBack",null);
+
 
     }
 

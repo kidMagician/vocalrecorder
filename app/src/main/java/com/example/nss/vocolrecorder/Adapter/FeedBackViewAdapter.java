@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.nss.vocolrecorder.Listener.FeedBackItem;
+import com.example.nss.vocolrecorder.item.FeedBackItem;
 import com.example.nss.vocolrecorder.R;
 
 import java.util.List;

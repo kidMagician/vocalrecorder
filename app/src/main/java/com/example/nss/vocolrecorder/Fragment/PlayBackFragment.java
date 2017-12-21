@@ -2,26 +2,22 @@ package com.example.nss.vocolrecorder.Fragment;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.example.nss.vocolrecorder.Listener.VoiceItem;
+import com.example.nss.vocolrecorder.item.VoiceItem;
 import com.example.nss.vocolrecorder.R;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Handler;
 
 /**
  * A simple {@link Fragment} subclass.

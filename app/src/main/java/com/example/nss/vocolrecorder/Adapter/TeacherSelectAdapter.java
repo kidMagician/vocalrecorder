@@ -8,10 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.nss.vocolrecorder.Fragment.TeacherSelectFragment;
-import com.example.nss.vocolrecorder.Listener.OnDataBaseChangeListner;
 import com.example.nss.vocolrecorder.Listener.OnListChangeListener;
-import com.example.nss.vocolrecorder.Listener.TeacherItem;
+import com.example.nss.vocolrecorder.item.TeacherItem;
 import com.example.nss.vocolrecorder.R;
 
 import java.util.List;
