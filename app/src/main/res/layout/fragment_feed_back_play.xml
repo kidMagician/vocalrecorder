@@ -18,7 +18,7 @@
         android:layout_centerHorizontal="true">
         >
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
@@ -26,29 +26,34 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:id="@+id/txt_subject"
+                android:text="subjec"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:id="@+id/txt_teacher_nick"
+                android:text="techer nickanme"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:id="@+id/txt_savedDate"/>
+                android:id="@+id/txt_savedDate"
+                android:text="savedDate"/>
 
             <SeekBar
                 android:id="@+id/seekbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                />
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
                 <TextView
-                    android:id="@+id/current_progress_text_view"
+                    android:id="@+id/txt_current_progress"
                     android:text="00:00"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -56,27 +61,49 @@
                     android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true" />
+
                 <com.melnykov.fab.FloatingActionButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_media_play"
                     android:id="@+id/fab_play"
+                    android:backgroundTint="@android:color/holo_red_light"
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
                     />
 
                 <TextView
-                    android:id="@+id/file_length_text_view"
-                    android:text="00:00"
+                    android:id="@+id/txt_file_length"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />
+                    android:layout_alignParentTop="true"
+                    android:text="00:00" />
 
             </RelativeLayout>
+            <!--<view-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1dp"/>-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txt_record"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/before_recording_button"/>
+            <com.melnykov.fab.FloatingActionButton
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/fab_record"
+                android:backgroundTint="@android:color/holo_red_light"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/ic_mic_white_36dp"
+                />
         </LinearLayout>
 
     </android.support.v7.widget.CardView>

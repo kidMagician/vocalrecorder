@@ -5,10 +5,22 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.nss.vocolrecorder.Activity.JoinActivity">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/join_txt_header"
+        android:textSize="30dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="20dp"
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
         >
         <TextView
             android:layout_width="wrap_content"
@@ -22,12 +34,15 @@
             android:inputType="textEmailAddress"
             tools:layout_editor_absoluteX="109dp"
             tools:layout_editor_absoluteY="114dp"
-            android:text="kid_magician@naver.com"/>
+            />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
         >
         <TextView
             android:layout_width="wrap_content"
@@ -42,7 +57,7 @@
             android:inputType="text"
             tools:layout_editor_absoluteX="109dp"
             tools:layout_editor_absoluteY="114dp"
-            android:text="nss"
+
             />
     </LinearLayout>
 
@@ -50,6 +65,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
         >
         <TextView
             android:layout_width="wrap_content"
@@ -63,13 +81,16 @@
             android:inputType="textPassword"
             tools:layout_editor_absoluteX="109dp"
             tools:layout_editor_absoluteY="204dp"
-            android:text="00000000"
+
             />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
         >
         <TextView
             android:layout_width="wrap_content"
@@ -83,13 +104,16 @@
             android:inputType="textPassword"
             tools:layout_editor_absoluteX="109dp"
             tools:layout_editor_absoluteY="299dp"
-            android:text="00000000"/>
+            />
     </LinearLayout>
 
     <android.support.v7.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp">
         <Button
             android:id="@+id/btn_register"
             android:layout_width="wrap_content"

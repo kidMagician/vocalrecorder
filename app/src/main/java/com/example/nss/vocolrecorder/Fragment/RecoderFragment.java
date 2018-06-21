@@ -16,15 +16,8 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.example.nss.vocolrecorder.Activity.RecorderActivity;
-import com.example.nss.vocolrecorder.BuildConfig;
-import com.example.nss.vocolrecorder.Listener.RecordService;
 import com.example.nss.vocolrecorder.R;
-import com.google.android.youtube.player.YouTubeInitializationResult;
-import com.google.android.youtube.player.YouTubePlayer;
-import com.google.android.youtube.player.YouTubePlayerFragment;
-import com.google.android.youtube.player.YouTubePlayerSupportFragment;
-import com.google.android.youtube.player.YouTubePlayerView;
-import com.google.api.services.youtube.YouTube;
+import com.example.nss.vocolrecorder.service.RecordService;
 import com.melnykov.fab.FloatingActionButton;
 
 import java.io.File;
@@ -133,7 +126,6 @@ public class RecoderFragment extends Fragment{
 
         if (!isPlay) {
 
-
             isPlay = true;
 
             Intent intent = new Intent(getActivity(), RecordService.class);
@@ -147,7 +139,7 @@ public class RecoderFragment extends Fragment{
                 folder.mkdir();
             }
 
-            txt_play.setText("Recoding...");
+            txt_play.setText(getText(R.string.recording_button));
 
             getActivity().startService(intent);
 
@@ -159,7 +151,7 @@ public class RecoderFragment extends Fragment{
 
             Intent intent = new Intent(getActivity(), RecordService.class);
 
-            txt_play.setText("tap to the start recording");
+            txt_play.setText(getText(R.string.before_recording_button));
 
             getActivity().stopService(intent);
 

@@ -13,6 +13,7 @@ import java.util.Map;
 import android.content.ContentValues;
 import android.util.Log;
 
+import com.example.nss.vocolrecorder.BuildConfig;
 import com.example.nss.vocolrecorder.util.HtttpManagement.Auth.Authentication;
 
 /**
@@ -45,7 +46,7 @@ public class HJsonConnecter extends AbstarctHttpConnecter implements HttpConnect
 
             httpURLConnection.setRequestMethod("GET");
             httpURLConnection.setRequestProperty("Authorization","Token " + token.GetValue().toString());
-
+            httpURLConnection.setConnectTimeout(3000);
             if(httpURLConnection.getResponseCode() != HttpURLConnection.HTTP_OK){
 
                 return null;

@@ -20,17 +20,19 @@ import com.example.nss.vocolrecorder.Fragment.FileViwerFragment;
 import com.example.nss.vocolrecorder.Fragment.HomeFragment;
 import com.example.nss.vocolrecorder.Fragment.ListeningFragment;
 import com.example.nss.vocolrecorder.Listener.MySharedPreference;
-import com.example.nss.vocolrecorder.R;
 import com.example.nss.vocolrecorder.util.HtttpManagement.Auth.Token;
 import com.example.nss.vocolrecorder.util.HtttpManagement.HttpConnecterManager;
+
+import com.example.nss.vocolrecorder.R;
 
 public class MainActivity extends AppCompatActivity {
 
     private ImageButton btn_home;
     private ImageButton btn_record;
     private ImageButton btn_alert;
-//    private ViewPager pager;
-//    private PagerSlidingTabStrip tabs;
+
+    private android.support.v4.app.Fragment fragment_home;
+    private android.support.v4.app.Fragment fragment_feedback;
 
     public final String FRAGMENT_HOME_TAG ="fragment_home";
     public final String FRAGMENT_FEEDBACK_TAG ="fragment_feedback";
@@ -43,18 +45,15 @@ public class MainActivity extends AppCompatActivity {
         btn_home =(ImageButton) findViewById(R.id.btn_home);
         btn_record=(ImageButton) findViewById(R.id.btn_record);
         btn_alert=(ImageButton) findViewById(R.id.btn_alert);
-//        pager = (ViewPager) findViewById(R.id.pager);
-//        tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
 
-        setButton();
+        initButton();
         authenficate();
         setupToolbar();
         initView();
-//        initPager();
 
     }
 
-    private void setButton(){
+    private void initButton(){
 
         btn_home.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,8 +66,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                btn_record.setImageResource(R.drawable.record_click);
+
                 Intent i = new Intent(MainActivity.this,RecorderActivity.class);
+
                 startActivity(i);
+
+                btn_record.setImageResource(R.drawable.record_unclick);
 
             }
         });
@@ -80,14 +84,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        initButtonicon();
+
+        btn_home.setImageResource(R.drawable.home_click);
     }
 
-//    private void initPager(){
-//
-//        pager.setAdapter(new MyAdapter(getSupportFragmentManager()));
-//        tabs.setViewPager(pager);
-//
-//    }
 
     private void authenficate(){
         String tokenStr =MySharedPreference.getPrefToken(getApplicationContext());
@@ -101,21 +103,17 @@ public class MainActivity extends AppCompatActivity {
 
     private void initView(){
 
-
         android.support.v4.app.Fragment homeFragment = HomeFragment.newInstance();
 
         getSupportFragmentManager().beginTransaction().replace(R.id.container,homeFragment,FRAGMENT_HOME_TAG).commit();
 
-        initButton();
-
-        btn_home.setImageResource(R.drawable.mail_black_envelope_symbol2);
     }
 
-    private void initButton(){
+    private void initButtonicon(){
 
-        btn_home.setImageResource(R.drawable.mail_black_envelope_symbol);
-        btn_alert.setImageResource(R.drawable.mail_black_envelope_symbol);
-        btn_record.setImageResource(R.drawable.mail_black_envelope_symbol);
+        btn_home.setImageResource(R.drawable.home_unclick);
+        btn_alert.setImageResource(R.drawable.alert_unclick);
+        btn_record.setImageResource(R.drawable.record_unclick);
     }
     private void switchToHome(){
 
@@ -123,17 +121,17 @@ public class MainActivity extends AppCompatActivity {
         android.support.v4.app.Fragment homeFragment = HomeFragment.newInstance();
         getSupportFragmentManager().beginTransaction().replace(R.id.container,homeFragment,FRAGMENT_HOME_TAG).commit();
 
-        initButton();
+        initButtonicon();
 
-        btn_home.setImageResource(R.drawable.mail_black_envelope_symbol2);
+        btn_home.setImageResource(R.drawable.home_click);
 
     }
 
     private void switchToFeedback(){
 
-        initButton();
+        initButtonicon();
 
-        btn_alert.setImageResource(R.drawable.mail_black_envelope_symbol2);
+        btn_alert.setImageResource(R.drawable.alert_click);
 
         android.support.v4.app.Fragment feedBackFragment = FeedBackFragment.newInstance();
 
@@ -171,6 +169,16 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
 
                 return true;
+            case R.id.logout:
+
+                MySharedPreference.clearToken(getApplicationContext());
+
+                intent =new Intent(MainActivity.this,LoginActivity.class);
+
+                startActivity(intent);
+
+                finish();
+
             default:
                 return super.onOptionsItemSelected(item);
         }

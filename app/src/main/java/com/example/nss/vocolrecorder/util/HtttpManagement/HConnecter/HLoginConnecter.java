@@ -43,7 +43,6 @@ public class HLoginConnecter extends AbstarctHttpConnecter implements HttpConnec
 
     public Boolean Request(String urlStr, ContentValues params){
 
-
         try{
 
             URL url = new URL(urlStr);

@@ -11,7 +11,8 @@
         android:layout_height="700px"
         android:orientation="vertical"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/toolbar"
         >
         <RelativeLayout
             android:layout_width="match_parent"
@@ -28,7 +29,8 @@
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:id="@+id/btn_select_vocal"
-                android:src="@drawable/mail_black_envelope_symbol"
+                android:src="@drawable/youtube"
+                android:backgroundTint="@color/primary"
                 android:layout_alignParentRight="true"
                 android:paddingRight="5dp"
                 android:paddingLeft="5dp"
@@ -40,8 +42,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-
-            `
     </LinearLayout>
 
     <TextView
@@ -60,6 +60,8 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="10dp"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_mic_white_36dp" />
+        android:src="@drawable/ic_mic_white_36dp"
+        android:backgroundTint="@color/primary"
+        />
 
 </RelativeLayout>

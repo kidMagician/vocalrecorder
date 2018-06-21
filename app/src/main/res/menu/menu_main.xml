@@ -4,4 +4,8 @@
     android:id="@+id/setting_bar"
     android:title="@string/bar_menu_stetting"
     />
+    <item
+        android:id="@+id/logout"
+        android:title="@string/bar_menu_logout"
+        />
 </menu>

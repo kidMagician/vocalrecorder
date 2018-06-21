@@ -9,12 +9,18 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:text="@string/login_txt_header"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="enter your username or e-mail"/>
     <EditText
         android:layout_width="500px"
         android:layout_height="wrap_content"
         android:id="@+id/edit_email"
-        android:text="ska1538@naver.com"
+        android:hint="email@example.com"
         />
     <LinearLayout
         android:layout_width="wrap_content"

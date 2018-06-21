@@ -1,5 +1,9 @@
 package com.example.nss.vocolrecorder.item;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.support.v4.os.ParcelableCompat;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -11,17 +15,45 @@ import java.util.ArrayList;
  * Created by NSS on 2017-12-18.
  */
 
-public class FeedBackItem {
 
-    public FeedBackItem(URI voice_url, long length, String savedDate, String teacher_nick, String subject) {
-        this.voice_url = voice_url;
+public class FeedBackItem implements Parcelable {
+
+    public FeedBackItem(String voice_url,long length,String savedDate,String teacher_nick,String subject) {
+        this.voice_url=voice_url;
+        this.length=length;
+        this.savedDate=savedDate;
+        this.teacher_nick=teacher_nick;
+        this.subject=subject;
+    }
+
+    public FeedBackItem(Parcel in) {
+        this.voice_url = in.readString();
         this.length = length;
         this.savedDate = savedDate;
         this.teacher_nick = teacher_nick;
         this.subject = subject;
     }
 
-    public void setVoice_url(URI voice_url) {
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(voice_url);
+        parcel.writeLong(length);
+        parcel.writeString(savedDate);
+        parcel.writeString(teacher_nick);
+        parcel.writeString(subject);
+    }
+
+    public static final Parcelable.Creator<FeedBackItem> CREATOR = new Parcelable.Creator<FeedBackItem>() {
+        public FeedBackItem createFromParcel(Parcel in) {
+            return new FeedBackItem(in);
+        }
+
+        public FeedBackItem[] newArray(int size) {
+            return new FeedBackItem[size];
+        }
+    };
+
+    public void setVoice_url(String voice_url) {
         this.voice_url = voice_url;
     }
 
@@ -41,13 +73,13 @@ public class FeedBackItem {
         this.subject = subject;
     }
 
-    private URI voice_url;
+    private String voice_url;
     private long length;
     private String savedDate;
     private String teacher_nick;
     private String subject;
 
-    public URI getVoice_url() {
+    public String getVoice_url() {
         return voice_url;
     }
 
@@ -79,7 +111,7 @@ public class FeedBackItem {
                 String savedDate =jsonArray.getJSONObject(i).getString("savedDate");
                 String subject = jsonArray.getJSONObject(i).getString("subject");
 
-                FeedBackItem feedBackItem = new FeedBackItem(new URI(voiceFile),0,savedDate,"not yey",subject);
+                FeedBackItem feedBackItem = new FeedBackItem(voiceFile,0,savedDate,"not yey",subject);
 
                 list.add(feedBackItem);
             }
@@ -87,16 +119,16 @@ public class FeedBackItem {
         }catch (JSONException e){
 
             e.printStackTrace();
-        }catch (URISyntaxException e){
-            e.printStackTrace();
         }
-
 
 
 
         return list;
     }
 
-
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 }
 

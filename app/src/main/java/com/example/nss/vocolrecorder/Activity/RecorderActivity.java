@@ -1,22 +1,20 @@
 package com.example.nss.vocolrecorder.Activity;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Environment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
-import com.example.nss.vocolrecorder.Adapter.VocalSelectAdapter;
 import com.example.nss.vocolrecorder.BuildConfig;
 import com.example.nss.vocolrecorder.Listener.MySharedPreference;
-import com.example.nss.vocolrecorder.Listener.RecordService;
 import com.example.nss.vocolrecorder.R;
+import com.example.nss.vocolrecorder.service.RecordService;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 import com.melnykov.fab.FloatingActionButton;
@@ -30,6 +28,7 @@ public class RecorderActivity extends YouTubeFailureRecoveryActivity {
     private TextView txt_play;
     private TextView txt_videoname;
     private ImageButton btn_select;
+
 
     YouTubePlayer player_youtube;
 
@@ -57,10 +56,10 @@ public class RecorderActivity extends YouTubeFailureRecoveryActivity {
         btn_select=(ImageButton) findViewById(R.id.btn_select_vocal);
 
         initYoutube();
-
         initButton();
 
     }
+
 
 
 

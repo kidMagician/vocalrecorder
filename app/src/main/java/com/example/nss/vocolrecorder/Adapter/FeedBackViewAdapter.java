@@ -1,13 +1,18 @@
 package com.example.nss.vocolrecorder.Adapter;
 
 import android.content.Context;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.nss.vocolrecorder.Fragment.FeedBackPlayFragment;
 import com.example.nss.vocolrecorder.item.FeedBackItem;
 import com.example.nss.vocolrecorder.R;
 
@@ -21,6 +26,9 @@ public class FeedBackViewAdapter extends RecyclerView.Adapter<FeedBackViewAdapte
 
     private Context context;
     private List<FeedBackItem> feedBackItemList;
+
+    private final String FRAGMENT_FEEDBACK_PLAY_TAG = "fragemnt_feedback_play";
+    private final String LOG_TAG = "feedBackViewAdapter";
 
     public FeedBackViewAdapter(Context context){
 
@@ -36,9 +44,9 @@ public class FeedBackViewAdapter extends RecyclerView.Adapter<FeedBackViewAdapte
     }
 
     @Override
-    public void onBindViewHolder(FeedBackHolder holder, int position) {
+    public void onBindViewHolder(FeedBackHolder holder, final int position) {
 
-        FeedBackItem item = feedBackItemList.get(position);
+        FeedBackItem item = getItem(position);
 
         holder.txt_teacher_nick.setText("not yet");
         holder.txt_subject.setText(item.getSubject());
@@ -47,9 +55,22 @@ public class FeedBackViewAdapter extends RecyclerView.Adapter<FeedBackViewAdapte
         holder.card_feedback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                try {
+                    FeedBackPlayFragment feedBackPlayFragment = FeedBackPlayFragment.newInstance(getItem(position));
 
+                    FragmentTransaction fragmentTransaction =((FragmentActivity)context).getSupportFragmentManager().beginTransaction();
+
+                    feedBackPlayFragment.show(fragmentTransaction,FRAGMENT_FEEDBACK_PLAY_TAG);
+                } catch (Exception e) {
+                    Log.e(LOG_TAG, "exception", e);
+                }
             }
         });
+    }
+
+    private FeedBackItem getItem(int i){
+
+        return feedBackItemList.get(i);
     }
 
     @Override
@@ -90,9 +111,6 @@ public class FeedBackViewAdapter extends RecyclerView.Adapter<FeedBackViewAdapte
             card_feedback =(CardView)v.findViewById(R.id.card_feedback);
         }
 
-
     }
-
-
 
 }

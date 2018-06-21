@@ -6,11 +6,20 @@
     android:orientation="vertical"
     tools:context="com.example.nss.vocolrecorder.Activity.LoginActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login_txt_header"
+        android:textSize="30dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        />
+
     <EditText
         android:id="@+id/edit_ID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="kid_magician@naver.com"
+        android:hint="email@example.com"
         android:inputType="textEmailAddress"
         android:ems="10"
         android:layout_marginTop="200px"
@@ -21,7 +30,7 @@
         android:id="@+id/edit_pass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="00000000"
+        android:hint="password"
         android:ems="10"
         android:inputType="textPassword"
         android:layout_marginTop="50px"

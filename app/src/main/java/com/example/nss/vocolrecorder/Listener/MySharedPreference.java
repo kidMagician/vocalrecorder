@@ -91,6 +91,16 @@ public class MySharedPreference {
         return sharedPreferences.getString(PREF_TOKEN,"");
     }
 
+    public static void clearToken(Context context){
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(PREF_TOKEN,"");
+        editor.commit();
+
+    }
+
+
 
 
 

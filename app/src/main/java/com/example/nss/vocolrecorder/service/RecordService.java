@@ -1,4 +1,4 @@
-package com.example.nss.vocolrecorder.Listener;
+package com.example.nss.vocolrecorder.service;
 
 import android.app.Service;
 import android.content.ContentValues;
@@ -10,6 +10,8 @@ import android.os.IBinder;
 import android.widget.Toast;
 
 import com.example.nss.vocolrecorder.BuildConfig;
+import com.example.nss.vocolrecorder.Listener.DBHelper;
+import com.example.nss.vocolrecorder.Listener.MySharedPreference;
 import com.example.nss.vocolrecorder.util.HtttpManagement.HConnecter.HVoiceUploadConnecter;
 import com.example.nss.vocolrecorder.util.HtttpManagement.HConnecter.HttpConnecter;
 import com.example.nss.vocolrecorder.util.HtttpManagement.HttpConnecterManager;
@@ -118,7 +120,7 @@ public class RecordService extends Service {
             values.put("fileName",fileName);
             values.put("length",endTimeMile-startTimeMile);
             values.put("savedDate",mTIme);
-            values.put("youtube_id",MySharedPreference.getPrefVocalUrl(getApplicationContext()));
+            values.put("youtube_id", MySharedPreference.getPrefVocalUrl(getApplicationContext()));
 
             httpHandler = new HttpHandler();
             httpHandler.execute(BuildConfig.SERVER_URL+"/voiceTraining/voiceUpload",values);
@@ -139,7 +141,7 @@ public class RecordService extends Service {
 
         filePath= Environment.getExternalStorageDirectory().getAbsolutePath() +"/MyVoiceRecorder/" ;
 
-        fileName ="good.mp4";
+        fileName ="voiceRecord.mp4";
 
         file = new File(filePath+fileName);
 
@@ -147,7 +149,7 @@ public class RecordService extends Service {
 
             i++;
 
-            fileName = "good" +"_"+ i +".mp4";
+            fileName = "voiceRecord" +"_"+ i +".mp4";
 
             file = new File(filePath + fileName);
 
@@ -155,11 +157,8 @@ public class RecordService extends Service {
     }
     class HttpHandler extends AsyncTask<Object,String,String> {
 
-        Boolean checkSuc;
-
         public HttpHandler() {
 
-            checkSuc = false;
         }
 
         @Override

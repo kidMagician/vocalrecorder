@@ -6,8 +6,20 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    
+    <!-- Loginactiviy -->
+    <string name="login_txt_header">Log in</string>
+    
+    <!-- FindpassActivity -->
+    <string name="findpass_txt_header">Recovery your accounter</string>
+    
+    <!-- JoinActivity -->
+    <string name="join_txt_header">Sign in</string>
+    
+    
+    <!--mene-->
     <string name="bar_menu_stetting">setting</string>
+    <string name="bar_menu_logout">Log Out</string>
 
     <!--preference-->
     <string name="pref_vocal_key">pref_vocal</string>
@@ -16,7 +28,6 @@
     <string name="pref_teacher_key">pref_teacher</string>
     <string name="pref_teacher_title">teacher setting</string>
     <string name="pref_teacher_summary">teacher</string>
-
     <!--toast-->
     <string name="toast_vocal_selected">good!! your vocal is sellected</string>
 
@@ -24,5 +35,15 @@
     <string name="recording_button">Recording...</string>
     <string name="before_recording_button">Tap to the Button to start recording</string>
 
+    <string name="search">Search</string>
+    <string name="find">search vocal in youtube</string>
+    <string name="notNetworking">not connected</string>
+    <string name="nothing">nothing!</string>
+    <string name="tryagain">Try Again!</string>
 
+    <string name="search_hint">Search in youtube</string>
+
+    <!--homefragment -->
+    <string name="homefragment_txt_manuel">Manual</string>
+    <string name="homefragment_txt_manuel_contents">first, select vocal \n\n twice, recording with your vocal \n\n third, get feedback from your teacher \n\n fouth, do the homework</string>
 </resources>
